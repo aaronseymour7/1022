@@ -56,7 +56,7 @@ Create a **line-separated plain text** file of the format:
  
  `[1,2,3,4] [InChI]`
     
- Where the first int term indicates the **reaction class**:
+ Where the first int term indicates the **reaction type**:
 
 |      | Reaction Type          |
 |:----:|:-----------------------|
