@@ -61,7 +61,21 @@ Example:
 ```
 To run reactions you must first
 
-- ```multi-prep [your input file] --m [method] --b [basis] --s [g,p,o] ```
+- `multi-prep [your input file] --m [method] --b [basis] --s [g,p,o] `
+
+  This will create a directory [int].mhfr for each input molecule. Inside each directory will be the reactant and product input files along with an index.txt that stores reactant and product names. 
+
+To run all reactions you must then run:
+
+`multi-run`
+
+This will submit all unique jobs.
+
+Once all jobs are complete, run:
+
+`multi-compute`
+
+All result data can be found in `enthalpies_summaries.csv` as well as `opt_summary.txt`
 
 
 
