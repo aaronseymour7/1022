@@ -112,9 +112,7 @@ After jobs are finished, run:
 
 ### Single Point Energy Calculation Add-on
 
-After running the standard workflow Single Point Energy calculations can be run.
-
-run
+After running the standard workflow Single Point Energy calculations can be run using:
 
 `multi-sprun --m [method] --b [basis] --s [g,p,o]`
 
