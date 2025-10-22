@@ -49,7 +49,7 @@ def run_reaction(action_type, reaction_type, input_smiles, lhs=None, rhs=None, s
         mol = Chem.AddHs(mol)
     if mol is None:
 
-        mol = Chem.MolFromInchi(input_smiles)
+        mol = Chem.MolFromSmiles(input_smiles)
         if mol is None:
             raise ValueError(f"Invalid SMILES: {input_smiles}")
     if method is None:
