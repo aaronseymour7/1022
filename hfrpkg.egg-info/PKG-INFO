@@ -1,8 +1,0 @@
-Metadata-Version: 2.4
-Name: hfrpkg
-Version: 0.4.2
-Summary: A package for generating and analyzing homodesmotic reaction enthalpies
-Author-email: Aaron Seymour <ads09449@uga.edu>
-Requires-Dist: rdkit
-Requires-Dist: pulp
-Requires-Dist: AaronTools
