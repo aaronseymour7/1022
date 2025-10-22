@@ -27,20 +27,20 @@ This package depends on some scientific libraries:
 ## Quick Start
 
 ### For Single Reaction
-- `hfr [view,write,count] [Isogyric, Isodesmic, Hypohomodesmotic, Homodesmotic] [input SMILES or InChI] --m [method] --b [basis] --s [g,p,o]`
+`hfr [view,write,count] [Isogyric, Isodesmic, Hypohomodesmotic, Homodesmotic] [input SMILES or InChI] --m [method] --b [basis] --s [g,p,o]`
 
   Example:
-    - `hfr write Isogyric 'InChI=1S/C4H10/c1-3-4-2/h3-4H2,1-2H3' --m B3LYP --b '6-31G(d)' --s g`
+     `hfr write Isogyric 'InChI=1S/C4H10/c1-3-4-2/h3-4H2,1-2H3' --m B3LYP --b '6-31G(d)' --s g`
 
          writes an Isogyric reaction for butane with Gaussian opt+freq input files on B3LYP/6-31G(d) level of theory
   
   Files will be written in cwd with format `[R,P][INDEX]_[COEFF].[in]` e.g. (`R1_1.com`,`P2_3.in`)
 
 To run jobs (from within reaction directory):
-- `folder-run`
+ `folder-run`
 
 Once jobs have finished:
-- `folder-compute`
+ `folder-compute`
 
 Results will be in `opt_summary.txt` and summarized in `enthalpies_summary.csv`
 
@@ -48,7 +48,7 @@ Results will be in `opt_summary.txt` and summarized in `enthalpies_summary.csv`
 
 Create a line seperated plain Text file of format:
 
-- `[1,2,3,4] [InChI]`
+ `[1,2,3,4] [InChI]`
     1-Isogyric
     2-Isodesmic
     3-Hypohomodesmotic
@@ -61,7 +61,7 @@ Example:
 ```
 To run reactions you must first
 
-- `multi-prep [your input file] --m [method] --b [basis] --s [g,p,o] `
+ `multi-prep [your input file] --m [method] --b [basis] --s [g,p,o] `
 
   This will create a directory [int].mhfr for each input molecule. Inside each directory will be the reactant and product input files along with an index.txt that stores reactant and product names. 
 
