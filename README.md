@@ -76,7 +76,7 @@ To run reactions you must first
 
  `multi-prep [your input file] --m [method] --b [basis] --s [g,p,o] `
 
-  This will create a directory `[int].mhfr` for each input molecule. Inside each directory will be the reactant and product input files along with an index.txt that stores reactant and product names. Additionally, a `unique_files/` directory will be made storing all unique integer labeled input files for submission
+  This will create a directory `[int].mhfr` for each input molecule. Inside each directory will be the reactant and product input files along with an `index.txt` that stores reactant and product names. Additionally, a `unique_files/` directory will be made storing all unique integer labeled input files for submission
 
 **Note:** to see number of jobs required look inside `unique_files/`.
 
