@@ -87,8 +87,8 @@ def make_spec(method, basis, extension):
     
 def main_cli():
     parser = argparse.ArgumentParser(description="Generate and submit SP .com files from optimized .log files")
-    parser.add_argument("--m", "--method", dest="method", default="m06-2x", help="DFT method (default: m06-2x)")
-    parser.add_argument("--b", "--basis", dest="basis", default="def2tzvp", help="Basis set (default: def2tzvp)")
+    parser.add_argument("--m", "--method", dest="method", default="B3LYP", help="DFT method (default: B3LYP)")
+    parser.add_argument("--b", "--basis", dest="basis", default="6-31G", help="Basis set (default: 6-31G)")
     parser.add_argument(
         "--s", choices=["g", "o", "p"], default="g",
         help="Software to use: 'g' for Gaussian, 'o' for Orca, 'p' for Psi4 (default: 'g')"
