@@ -104,7 +104,7 @@ run
 
 `multi-mc --rmsd [rmsd]`
 
-- This will generate and run conformers where the quantity is a function of rotatable bonds and rmsd is the overlap similarity metric. default RMSD = .15
+- This will generate and run conformers where the quantity is a function of rotatable bonds and rmsd is the overlap similarity metric.
 
 After jobs are finished, run: 
 
