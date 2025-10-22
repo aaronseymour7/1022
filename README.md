@@ -131,5 +131,15 @@ Once the jobs are finished, run
 This will compute enthalpies of formation using the Single Point energy values. Additionally, each `.mhfr` file will have a subdirectory `/spec/` added with its reaction specific SP energy values. Results can be found in `sp_enthalpies_summary.csv`
 
 
+## Default Values
+
+|   Arg   | Default   |
+|:----:|:-----------|
+| --s    | Gaussian   |
+| --m    | B3LYP       |
+| --b    | 6-31G      |
+| --rmsd    | .15      |
+
+
 
   
