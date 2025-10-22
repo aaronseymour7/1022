@@ -144,10 +144,10 @@ def get_extensions(index_path="index.txt"):
     ext_map = {
         "gaussian": ('.com','.log'),
         "orca": ('.inp', '.out'),
-        "psi4": ('.in', '.dat')
+        "psi4": ('.in', '.out')
     }
     try:
-        with open(index_file) as f:
+        with open(index_path) as f:
             first_line = f.readline().strip()
             parts = first_line.split("\t")
             if len(parts) >= 4 and parts[2].lower() == "software:":
@@ -160,4 +160,20 @@ def get_extensions(index_path="index.txt"):
     return None
 
 
-
+def get_softext_UFI(index_path="index.txt"):
+    ext_map = {
+        "gaussian": ('.com','.log'),
+        "orca": ('.inp', '.out'),
+        "psi4": ('.in', '.out')
+    }
+    try:
+        with open(index_path) as f:
+            first_line = f.readline().strip()
+            parts = first_line.split("\t")
+            if len(parts) >= 2 and parts[0].lower() == "software:":
+                software = parts[1].lower()
+                return software, *ext_map.get(software, ("", ""))
+    except FileNotFoundError:
+        print(f"[ERROR] Could not find {index_file}")
+    except Exception as e:
+        print(f"[ERROR] Reading {index_file}: {e}")

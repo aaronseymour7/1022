@@ -1,10 +1,9 @@
-    #!/usr/bin/env python3
-
 import os
 import glob
 import re
 from AaronTools.fileIO import FileReader
 import importlib.resources  
+from hfrpkg.utils import get_softext_UFI
 
 def compute_folder(folder_path):
     def get_B(filename):
@@ -36,18 +35,18 @@ def compute_folder(folder_path):
             if 'E_ZPVE' in reader.keys():
                 return reader['E_ZPVE']
             else:
-                return None
+                raise ValueError(f"{folder_path}/{logfile} Job incomplete")
         except Exception:
-            return None
+            raise ValueError(f"Error in get_enthalpy({folder_path}/{logfile})")
     def get_zpve(logfile):
         try:
             reader = FileReader(logfile, just_geom=False)
             if 'ZPVE' in reader.keys():
                 return reader['ZPVE']
             else:
-                return None
+                raise ValueError(f"{folder_path}/{logfile} Job incomplete")
         except Exception:
-            return None
+            raise ValueError(f"Error in get_enthalpy({folder_path}/{logfile})")
     def get_inchi(log_filename, index_path="index.txt"):
         try:
             with open(index_path) as f:
@@ -100,7 +99,7 @@ def compute_folder(folder_path):
         ext_map = {
             "gaussian": ".log",
             "orca": ".out",
-            "psi4": ".dat"
+            "psi4": ".out"
         }
         try:
             with open(index_path) as f:
@@ -143,11 +142,13 @@ def compute_folder(folder_path):
             enthalpy = get_enthalpy(f)
             if enthalpy is not None:
                 total_products += coeff * enthalpy
-
+            
         for f in reactants:
             mol_type, coeff = extract_coeff_and_type(f, ext)
             if mol_type is None: continue
             enthalpy = get_enthalpy(f)
+            if enthalpy is None:
+                raise ValueError("Job incomplete")
             if enthalpy is not None:
                 total_reactants += coeff * enthalpy
 

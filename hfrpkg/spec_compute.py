@@ -2,26 +2,32 @@
 
 import os
 import glob
+import argparse
 import re
 from AaronTools.fileIO import FileReader
 import importlib.resources  
 from hfrpkg.read_optsum import read_optsum
+from hfrpkg.compute_folder import compute_folder
+from hfrpkg.write_data import write_single_reaction
+def kjTokcal(value):
+        try:
+            return value / 4.184
+        except TypeError:
+            return None
 
-
-
-
-def spec_compute(mhfr_file):
-    
+def spec_compute(mhfr_file=None):
+    notSP = False
     cwd = os.getcwd()  
-    if mhfr is None:
-        mhfr = cwd
+    if mhfr_file is None:
+        notSP = True
+        mhfr_file = cwd
     
     reaction_data = compute_folder(mhfr_file)
     write_single_reaction(reaction_data, mhfr_file)  
     opt_data = read_optsum(mhfr_file)                
 
     
-    spec_dir = os.path.join(cwd, "spec")
+    spec_dir = os.path.join(mhfr_file, "spec")
     os.chdir(spec_dir)
     def get_B(filename):
         base = os.path.splitext(filename)[0]
@@ -58,7 +64,7 @@ def spec_compute(mhfr_file):
             reader = FileReader(logfile, just_geom=False)
             if "energy" in reader.keys():
                 if zpve is None:
-                    print(f"No ZPVE found in opt_summary for {inchi}")
+                    print(f"AAAAAAAA No ZPVE found in opt_summary for {inchi}")
                     return None, zpve
                 return reader["energy"] + zpve, zpve
         except Exception:
@@ -117,7 +123,7 @@ def spec_compute(mhfr_file):
         ext_map = {
             "gaussian": ".log",
             "orca": ".out",
-            "psi4": ".dat"
+            "psi4": ".out"
         }
         try:
             with open(index_path) as f:
@@ -134,13 +140,14 @@ def spec_compute(mhfr_file):
         return None
     
     ext = get_extension()
-
+    #print(f"Using {ext} files...")
 
     try:
         log_files = sorted(glob.glob("*"+ ext), key=get_B)
+        #if log_files:
+            #print("spoutputs found")
         products = [f for f in log_files if f.startswith("P")]
         reactants = [f for f in log_files if f.startswith("R")]
-
         if not reactants:
             raise ValueError("No reactants found.")
 
@@ -185,7 +192,6 @@ def spec_compute(mhfr_file):
             if Hf is None:
                 print(f"[ATcT MISSING]  {spec_dir}  {mol_type} → InChI: {inchi}")
                 missing_Hf = True
-                Hf = ""
             Hf_reactants += (Hf if Hf else 0) * coeff
             reactants_data.append((coeff, smiles, inchi, Hf, enthalpy, zpve))
         input_file = reactants[-1]
@@ -199,7 +205,6 @@ def spec_compute(mhfr_file):
             
             if Hf is None:
                 print(f"[ATcT MISSING]  {spec_dir}  {mol_type} → InChI: {inchi}")
-                Hf = ""
             atct_value = Hf
             reactants_data.append((coeff, input_smiles, inchi, Hf, enthalpy, zpve))
         
@@ -213,13 +218,12 @@ def spec_compute(mhfr_file):
             if Hf is None:
                 print(f"[ATcT MISSING]  {spec_dir} {mol_type} → InChI: {inchi}")
                 missing_Hf = True
-                Hf = ""
             Hf_products += (Hf if Hf else 0) * coeff
             products_data.append((coeff, smiles, inchi, Hf, enthalpy, zpve))
 
 
         if missing_Hf:
-            input_hf = ""
+            input_hf = None
         else:
             input_hf = round((Hf_products - Hf_reactants - reaction) / (final_coeff), 4)
     
@@ -230,15 +234,19 @@ def spec_compute(mhfr_file):
         sp_data = {
             "input_smiles": input_smiles,
             "input_inchi": input_inchi,
-            "dft_hf": input_hf,
+            "dft_hf": kjTokcal(input_hf),
             "level": level,
             "reactants": reactants_data,
             "products": products_data,
-            "input_atct": atct_value,
+            "input_atct": kjTokcal(atct_value),
             "reaction_H": reaction
         }
+        #print(spec_dir)
+        
         output_path = os.path.join(spec_dir, "sp_summary.txt")
+        #print(output_path)
         with open(output_path, "w", encoding="utf-8") as fout:
+            #print(output_path)
             fout.write(f"{sp_data['input_smiles']}\t{sp_data['input_inchi']}\n")
             fout.write(f"Reaction Enthalpy (kJ/mol):{sp_data['reaction_H']}\n")
             fout.write(f"DFT Enthalpy of Formation (kJ/mol):{sp_data['dft_hf']}\n")
@@ -249,7 +257,7 @@ def spec_compute(mhfr_file):
             fout.write("PRODUCTS\n")
             for coeff, smiles, inchi, atct, enthalpy, zpve in sp_data['products']:
                 fout.write(f"{coeff} {smiles}\t{inchi}\t{atct}\t{enthalpy}\t{zpve}\n")
-        
+        #print("yeah this should work")
         return sp_data
 
     except Exception as e:
@@ -264,7 +272,7 @@ def main_cli():
     parser.add_argument("--f", "--folder", dest="f", default= None, help="mhfr folder, if only single, leave empty")
     args = parser.parse_args()
 
-    spec_compute(mhfr=args.f)
+    spec_compute(mhfr_file=args.f)
 
 if __name__ == "__main__":
-    main_cli()
+   main_cli()

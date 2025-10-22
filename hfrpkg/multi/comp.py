@@ -19,7 +19,7 @@ def main():
                         if result is not None:
                             results.append(result)
 
-                            summary_file = os.path.join(mhfr_file, "reaction_summary.txt")
+                            summary_file = os.path.join(mhfr_file, "opt_summary.txt")
                             with open(summary_file, "r", encoding="utf-8") as sf:
                                 rxn_fout.write(f"=== {mhfr_file}/reaction_summary.txt ===\n")
                                 rxn_fout.write(sf.read())

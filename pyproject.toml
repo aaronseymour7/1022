@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hfrpkg"
-version = "0.1.1"
+version = "0.4.2"
 description = "A package for generating and analyzing homodesmotic reaction enthalpies"
 authors = [
     { name="Aaron Seymour", email="ads09449@uga.edu" }
@@ -20,10 +20,15 @@ hfr = "hfrpkg.cli:main"
 multi-prep = "hfrpkg.multi.hfr_driver:main_cli"
 multi-run = "hfrpkg.multi.run_multiple:main_cli"
 multi-compute = "hfrpkg.multi.compute_multiple:main_cli"
-multi-sprun = "hfrpkg.multi_spec_prep:main_cli"
-multi-spcomp = "hfrpkg.multi_spec:main_cli"
+multi-sprun = "hfrpkg.multi.multi_spec_prep:main_cli"
+multi-spcomp = "hfrpkg.multi.multi_spec:main_cli"
 folder-compute = "hfrpkg.compute_single:main_cli"
 folder-run = "hfrpkg.run_single:main_cli"
-folder-sprun = "hfrpkg.spec_run:main_cli"
+folder-sprun = "hfrpkg.run_spec:main_cli"
 folder-spcomp = "hfrpkg.spec_compute:main_cli"
-
+pred = "hfrpkg.sandbox.pred:main_cli"
+rec = "hfrpkg.sandbox.rec:main_cli"
+verify = "hfrpkg.sandbox.verify:main_cli"
+multi-mc = "hfrpkg.multi.makeConfs:main_cli"
+mccj = "hfrpkg.multi.checkConfJobs:main_cli"
+multi-ec = "hfrpkg.multi.extractConfs:main_cli" 

@@ -3,11 +3,11 @@ import os
 import glob
 import argparse
 import shutil
-from hfrpkg.compute_multiple import combined_postprocess as compute_multiple
-from hfrpkg.unique_spec import make_spec
+from hfrpkg.multi.compute_multiple import combined_postprocess as compute_multiple
+from hfrpkg.multi.unique_spec import make_spec
 
 def multi_spprep(method, basis, extension):
-  compute_multiple()
+#  compute_multiple()
   
   make_spec(method, basis, extension)
 
@@ -28,7 +28,7 @@ def main_cli():
     )
     args = parser.parse_args()
 
-    make_spec(method=args.method, basis=args.basis, extension = args.s)
+    multi_spprep(method=args.method, basis=args.basis, extension = args.s)
 
 if __name__ == "__main__":
     main_cli()

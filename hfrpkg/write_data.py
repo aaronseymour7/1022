@@ -14,11 +14,11 @@ def write_single_reaction(reaction_data, folder_path):
         fout.write(f"{reaction_data['input_smiles']}\t{reaction_data['input_inchi']}\n")
         fout.write(f"Reaction Enthalpy (kJ/mol):{reaction_data['reaction_H']}\n")
         fout.write(f"DFT Enthalpy of Formation (kJ/mol):{reaction_data['dft_hf']}\n")
-        fout.write("REACTANTS\n")
+        fout.write("REACTANTS\tATcT\tDFT E\tZPVE\n")
         for coeff, smiles, inchi, atct, energy, zpve in reaction_data['reactants']:
             fout.write(f"{coeff} {smiles}\t{inchi}\t{atct}\t{energy}\t{zpve}\n")
         
-        fout.write("PRODUCTS\n")
+        fout.write("PRODUCTS\tATcT\tDFT E\tZPVE\n")
         for coeff, smiles, inchi, atct, energy, zpve in reaction_data['products']:
             fout.write(f"{coeff} {smiles}\t{inchi}\t{atct}\t{energy}\t{zpve}\n")
         
@@ -31,4 +31,5 @@ def write_single_reaction(reaction_data, folder_path):
         reaction_data['input_inchi'],
         kjTokcal(reaction_data['dft_hf']),
         kjTokcal(reaction_data['input_atct']),
+        kjTokcal(reaction_data['reaction_H'])
     )

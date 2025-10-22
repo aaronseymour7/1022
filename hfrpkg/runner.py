@@ -10,9 +10,9 @@ from hfrpkg.utils import (
 )
 from AaronTools.theory import Theory, OptimizationJob, FrequencyJob
 from AaronTools.fileIO import FileWriter
-
-from hfrpkg.core import Isogyric, Isodesmic, Hypohomodesmotic, Homodesmotic
-
+import importlib.resources
+#from hfrpkg.core import Isogyric, Isodesmic, Hypohomodesmotic, Homodesmotic
+from hfrpkg.sandbox.Hfcore import Isogyric, Isodesmic, Hypohomodesmotic, Homodesmotic
 reaction_map = {
     "homodesmotic": Homodesmotic,
     "isodesmic": Isodesmic,
@@ -32,12 +32,26 @@ software_map = {
     "p": "Psi4"
 }
 
-
+def get_Hf(inchi):
+        try:
+            with importlib.resources.open_text("hfrpkg.data", "ATcT_lib.txt", encoding="utf-8") as f:
+                for line in f:
+                    parts = line.strip().split("\t")
+                    if len(parts) >= 6 and parts[3] == inchi:
+                        return float(parts[5])
+        except Exception:
+            pass
+        return None
 def run_reaction(action_type, reaction_type, input_smiles, lhs=None, rhs=None, substruct=None, replacement=None, outfolder=None,method=None, basis=None, extension=None):
-    
-    mol = Chem.AddHs(Chem.MolFromSmiles(input_smiles))
+
+    mol = (Chem.MolFromInchi(input_smiles))
+    if mol is not None:
+        mol = Chem.AddHs(mol)
     if mol is None:
-        raise ValueError(f"Invalid SMILES: {input_smiles}")
+
+        mol = Chem.MolFromInchi(input_smiles)
+        if mol is None:
+            raise ValueError(f"Invalid SMILES: {input_smiles}")
     if method is None:
         method = "B3LYP"
     if basis is None:
@@ -76,7 +90,7 @@ def run_reaction(action_type, reaction_type, input_smiles, lhs=None, rhs=None, s
         
         index_file = os.path.join(outfolder, "index.txt")
         with open(index_file, "w") as idx:
-            idx.write(f"Level:\t{reaction_fn.__name__}\tSoftware:\t{software}\n")
+            idx.write(f"Level:\t{reaction_fn.__name__}\tSoftware:\t{software}\tMethod:\t{method}\tBasis:\t{basis}\n")
             idx.write(f"Input SMILES:\t{input_smiles}\n")
             idx.write("Filename\tInChI\tSMILES\n")
             Ri = Li = 1
@@ -84,19 +98,21 @@ def run_reaction(action_type, reaction_type, input_smiles, lhs=None, rhs=None, s
                 geom = geom_from_rdkit(mol)
                 smiles = Chem.MolToSmiles(mol)
                 inchi = Chem.MolToInchi(mol)
+                Hf = get_Hf(inchi)
                 name = f"R{Li}_{coeff}"
                 outfile=os.path.join(outfolder, name + ext)
                 geom.write(outfile=outfile, theory=level)    
-                idx.write(f"{name}\t{inchi}\t{smiles}\n")
+                idx.write(f"{name}\t{inchi}\t{smiles}\t{Hf}\n")
                 Li += 1
             for mol, coeff in rhs_mols:
                 geom = geom_from_rdkit(mol)
                 smiles = Chem.MolToSmiles(mol)
                 inchi = Chem.MolToInchi(mol)
+                Hf = get_Hf(inchi)
                 name = f"P{Ri}_{coeff}"
                 outfile=os.path.join(outfolder, name + ext)
                 geom.write(outfile=outfile, theory=level)
-                idx.write(f"{name}\t{inchi}\t{smiles}\n")
+                idx.write(f"{name}\t{inchi}\t{smiles}\t{Hf}\n")
                 Ri += 1
         print("Reaction written to", outfolder)
 

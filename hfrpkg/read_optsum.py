@@ -20,14 +20,21 @@ def read_optsum(folder_path):
     reaction_data["input_inchi"] = first_parts[1] if len(first_parts) > 1 else None
 
     reaction_data["reaction_H"] = float(lines[1].split(":")[1])
-    reaction_data["dft_hf"] = float(lines[2].split(":")[1])
-
+   # reaction_data["dft_hf"] = float(lines[2].split(":")[1])
+    
+    try:
+        value = lines[2].split(":")[1].strip()
+        reaction_data["dft_hf"] = float(value) if value else None
+    except (IndexError, ValueError):
+        reaction_data["dft_hf"] = None
+    
     section = None
     for line in lines[3:]:
-        if line == "REACTANTS":
+        clean = line.strip().upper()
+        if clean.startswith("REACTANTS"):
             section = "reactants"
             continue
-        elif line == "PRODUCTS":
+        elif clean.startswith("PRODUCTS"):
             section = "products"
             continue
 
@@ -36,13 +43,17 @@ def read_optsum(folder_path):
             coeff_smiles = parts[0].split(" ")
             coeff = int(coeff_smiles[0])
             smiles = coeff_smiles[1]
-            inchi = parts[1]
-            atct = float(parts[2]) if parts[2] != "None" else None
+            inchi =inchi = parts[1].strip() 
+           # atct = float(parts[2]) if parts[2] != "None" else None
+            try:
+                value = parts[2]
+                atct = float(value) if value else None
+            except (IndexError, ValueError):
+                atct = None
             energy = float(parts[3]) if parts[3] != "None" else None
             zpve = float(parts[4]) if parts[4] != "None" else None
 
             reaction_data[section].append((coeff, smiles, inchi, atct, energy, zpve))
-
     return reaction_data
 
 

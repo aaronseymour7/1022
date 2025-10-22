@@ -5,8 +5,9 @@ import os
 import glob
 import argparse
 import shutil
-from AaronTools.input import Theory, FileWriter
 from AaronTools.geometry import Geometry
+from AaronTools.fileIO import FileWriter
+from AaronTools.theory import Theory
 from AaronTools.job_control import SubmitProcess
 from AaronTools.theory.job_types import SinglePointJob
 from hfrpkg.run_single import run_jobs
@@ -56,7 +57,7 @@ def make_spec(method, basis, extension):
                 sw_idx = parts.index("Software:") + 1
                 if sw_idx < len(parts):
                     parts[sw_idx] = software 
-                    lines[0] = "\t".join(parts)
+                    lines[0] = "\t".join(parts)+ "\n"
 
         with open(os.path.join(spec_dir, "index.txt"), "w", encoding="utf-8") as f:
             f.writelines(lines)

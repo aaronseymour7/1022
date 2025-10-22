@@ -3,7 +3,7 @@
 import os
 import glob
 import shutil
-
+from hfrpkg.utils import get_extensions
 def load_unique_inchi_map(index_path):
     inchi_to_filename = {}
     with open(index_path, "r") as f:
