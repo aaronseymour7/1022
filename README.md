@@ -1,6 +1,6 @@
 # HFR_PACKAGE 
 
-A Python package for generating and analyzing **homodesmotic family reaction enthalpies** using RDKit, PuLP, and AaronTools.
+A Python package for generating and analyzing **homodesmotic family reactions** using RDKit, PuLP, and AaronTools.
 
 ---
 
