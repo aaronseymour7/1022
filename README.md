@@ -81,7 +81,7 @@ Once all jobs are complete, run:
 
 `multi-compute`
 
-All result data can be found in `enthalpies_summaries.csv` as well as `opt_summary.txt`
+All result data can be found in `enthalpies_summaries.csv` as well as `opt_summary.txt`. For individual reaction data, go to the `.mhfr` directory corresponding to the reaction of interest's line number in the input file.
 
 
 
