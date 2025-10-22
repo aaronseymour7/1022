@@ -52,13 +52,13 @@ Create a line seperated plain Text file of format:
     
   -1-Isogyric
     
-   2-Isodesmic
+    2-Isodesmic
      
-   3-Hypohomodesmotic
+    3-Hypohomodesmotic
     
-   4-Homodesmotic
+    4-Homodesmotic
     
-   space separation followed by InChi
+    space separation followed by InChi
 
 Example:
 ```
