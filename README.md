@@ -34,8 +34,7 @@ This package depends on some scientific libraries:
 
   - writes an Isogyric reaction for butane with Gaussian opt+freq input files on B3LYP/6-31G(d) level of theory
   
-  #### NOTE 
-  Files will be written in cwd with format `[R,P][INDEX]_[COEFF].[in]` e.g. (`R1_1.com`,`P2_3.in`)
+  **NOTE** Files will be written in cwd with format `[R,P][INDEX]_[COEFF].[in]` e.g. (`R1_1.com`,`P2_3.in`)
 
 To run jobs (from within reaction directory):
  `folder-run`
