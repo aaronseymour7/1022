@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 */__pycache__/
+hfrpkg/__pycache__
 # Build artifacts
 build/
 dist/
