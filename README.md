@@ -27,4 +27,4 @@ This package depends on some scientific libraries:
 ## Quick Start
 
 ### For Single Reaction
-- 
+- `hfr [view,write,count] [Isogyric, Isodesmic, Hypohomodesmotic] [mol SMILES or InChI] 
