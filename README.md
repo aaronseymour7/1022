@@ -45,4 +45,20 @@ Results will be in `opt_summary.txt` and summarized in `enthalpies_summary.csv`
 
 ### For Multiple Reactions
 
+Create a line seperated plain Text file of format:
+
+- `[1,2,3,4] [InChI]`
+    1-Isogyric
+    2-Isodesmic
+    3-Hypohomodesmotic
+    4-Homodesmotic
+    space separation followed by InChi
+Example:
+```
+1 'InChI=1S/C4H10/c1-3-4-2/h3-4H2,1-2H3'
+3 'InChI=1S/C4H10/c1-3-4-2/h3-4H2,1-2H3'
+```
+
+```multi-prep [your input file] --m [method] --b [basis] --s [g,p,o] ```
+
   
