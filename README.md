@@ -28,6 +28,7 @@ This package depends on some scientific libraries:
 
 ### For Single Reaction
 - `hfr [view,write,count] [Isogyric, Isodesmic, Hypohomodesmotic, Homodesmotic] [input SMILES or InChI] --m [method] --b [basis] --s [g,p,o]`
+
   Example:
     - `hfr write Isogyric 'InChI=1S/C4H10/c1-3-4-2/h3-4H2,1-2H3' --m B3LYP --b '6-31G(d)' --s g`
 
