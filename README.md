@@ -32,7 +32,7 @@ This package depends on some scientific libraries:
   Example:
      `hfr write Isogyric 'InChI=1S/C4H10/c1-3-4-2/h3-4H2,1-2H3' --m B3LYP --b '6-31G(d)' --s g`
 
-  writes an Isogyric reaction for butane with Gaussian opt+freq input files on B3LYP/6-31G(d) level of theory
+  - writes an Isogyric reaction for butane with Gaussian opt+freq input files on B3LYP/6-31G(d) level of theory
   
   Files will be written in cwd with format `[R,P][INDEX]_[COEFF].[in]` e.g. (`R1_1.com`,`P2_3.in`)
 
