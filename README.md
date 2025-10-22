@@ -52,7 +52,7 @@ Create a **line-separated plain text** file of the format:
     
  Where the first bracketed number indicates the **reaction class**:
 
-| Code | Reaction Type          |
+|      | Reaction Type          |
 |:----:|:-----------------------|
 | 1    | Isogyric               |
 | 2    | Isodesmic              |
