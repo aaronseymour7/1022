@@ -6,7 +6,7 @@ A Python package for generating and analyzing **homodesmotic family reactions** 
 
 ## Features
 
-- Balance Isogyric, Isodesmic, Hypohomodesmotic, and Homodesmotic reactions automatically.
+- Balance Isogyric, Isodesmic, Hypohomodesmotic, and Homodesmotic reactions automatically using ILP.
 - Compute reaction enthalpies from Gaussian output.
 - References ATcT values for enthalpies of formation.
 - Support for single and multiple computation workflows.
