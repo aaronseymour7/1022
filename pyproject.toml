@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hfrpkg"
-version = "1.0.0"
+version = "1.0.1"
 description = "A package for generating and analyzing homodesmotic reaction enthalpies"
 authors = [
     { name="Aaron Seymour", email="ads09449@uga.edu" }
