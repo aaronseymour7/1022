@@ -1,7 +1,6 @@
 import os
 import sys
 import argparse
-from hfrpkg.utils import get_extensions
 from rdkit import Chem
 from AaronTools.fileIO import FileReader
 from AaronTools.geometry import Geometry
@@ -30,6 +29,29 @@ def find_filename_by_inchi(inchi_query, index_file="index.txt"):
         if inchi.strip() == inchi_query.strip():
             return filename
     return None
+
+def get_extensions(index_path="index.txt"):
+    ext_map = {
+        "gaussian": ('.com', '.log'),
+        "orca": ('.inp', '.out'),
+        "psi4": ('.in', '.out')
+    }
+    try:
+        with open(index_path) as f:
+            first_line = f.readline().strip().lower()
+            if "software:" in first_line:
+                parts = first_line.replace(":", "").split()
+                if "psi4" in parts:
+                    return ext_map["psi4"]
+                elif "gaussian" in parts:
+                    return ext_map["gaussian"]
+                elif "orca" in parts:
+                    return ext_map["orca"]
+    except FileNotFoundError:
+        print(f"[ERROR] Could not find {index_path}")
+    except Exception as e:
+        print(f"[ERROR] Reading {index_path}: {e}")
+    return ('.com', '.log')
 
 
 def find_filename_by_smiles(smiles_query, index_file="index.txt"):
@@ -104,6 +126,7 @@ def main(input_smiles, info):
             geom = Geometry(outfile)
             if geom is None:
                 raise ValueError(f"Failed to read geometry from {outfile}")
+            print(geom)
             return geom
         except Exception as e:
             raise ValueError(f"Error reading geometry: {e}")
